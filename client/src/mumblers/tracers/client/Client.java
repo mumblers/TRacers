@@ -14,6 +14,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
 import java.lang.reflect.InvocationTargetException;
 
+import mumblers.tracers.common.Player;
+
 /**
  * Created by Sinius15 on 14-7-2015.
  */
@@ -41,6 +43,8 @@ public class Client extends Canvas implements Runnable{
     private boolean isRunning;
     private Thread mainThread;
 
+    private Player myPlayer;
+    
     public Client(JFrame frame) {
         this.frame = frame;
         setPreferredSize(new Dimension(width,height));
