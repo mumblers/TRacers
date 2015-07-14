@@ -7,11 +7,14 @@ package mumblers.tracers.common;
 public class Player {
 
     private String name;
-    private PlayerColour colour;
+    private PlayerColour color = PlayerColour.BLACK;
+    private int x = 0;
+    private int y = 0;
+    private int rotation = 0;
 
     public Player(PlayerColour colour, String name){
         this.name = name;
-        this.colour = colour;
+        this.color = colour;
     }
 
     public String getName() {
@@ -22,11 +25,29 @@ public class Player {
         this.name = name;
     }
 
+    public PlayerColour getColor() {
+        return color;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void add(int a) {
+        x+=a;
+        y+=a;
+    }
+
+    public int getRotation() {
+        return rotation;
+    }
+
     public void setColour(PlayerColour colour) {
         this.colour = colour;
     }
-
-    public PlayerColour getColour() {
-        return colour;
-    }
+    
 }

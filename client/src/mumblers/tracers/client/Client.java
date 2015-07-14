@@ -1,8 +1,10 @@
 package mumblers.tracers.client;
 
+import mumblers.tracers.client.graphics.PlayerSprite;
+import mumblers.tracers.client.graphics.TrackSprite;
 import mumblers.tracers.common.Player;
+import mumblers.tracers.common.Track;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -14,10 +16,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +27,12 @@ import java.util.List;
 public class Client extends Canvas implements Runnable{
 
 
+    public static final int IMG_SIZE = 128;
+    public static final int SCALE = 4;
+    public static final int TILE_SIZE = IMG_SIZE * SCALE;
+
     private static final int CAR_ACC = 2;
-    private static final int MAX_VEL = 500;
+    private static final int MAX_VEL = 80;
     private static int TURN_SPEED = 2;
     private static final String TITLE = "TRacers";
     public static final int SLEEPTIME = 2;
@@ -53,14 +56,16 @@ public class Client extends Canvas implements Runnable{
 
     private Thread mainThread;
 
-    private Player myPlayer;
+    private Player myPlayer = new Player("HOI");
+    private Track track = new Track();
 
-    private BufferedImage car;
+
     private int carAngle = 0;
     private int carX;
     private int carY;
     private Input input;
     private int carVel = 0;
+    private TrackSprite trackSprite;
 
     private List<Player> players = new ArrayList<>();
 
@@ -80,6 +85,7 @@ public class Client extends Canvas implements Runnable{
         input = new Input(this);
         carX = width/2;
         carY = height/2;
+        trackSprite = new TrackSprite(track, myPlayer);
     }
 
     public static void main(String[] args) {
@@ -210,15 +216,12 @@ public class Client extends Canvas implements Runnable{
     }
 
     private void init() {
-        try {
-            car = ImageIO.read(Client.class.getResourceAsStream("car_red.png"));
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+        PlayerSprite.loadSprites(Client.class);
+        TrackSprite.loadSprites(Client.class);
     }
 
     public void tick() {
-        if(input.left.isPressed()) {
+        /*if(input.left.isPressed()) {
             if(!input.right.isPressed()) {
                 carAngle -= TURN_SPEED;
             }
@@ -239,19 +242,19 @@ public class Client extends Canvas implements Runnable{
 
         if(input.reverse.isPressed()) {
             carVel -= CAR_ACC + 1;
-            carVel = Math.min(MAX_VEL, carVel);
+            carVel = Math.max(-MAX_VEL, carVel);
         }
 
-
-
-        carX += carVel * Math.cos(Math.toRadians(carAngle));
-        carY += carVel * Math.sin(Math.toRadians(carAngle));
+        carX += carVel * Math.cos(Math.toRadians(carAngle)) ;
+        carY += carVel * Math.sin(Math.toRadians(carAngle)) ;
 
         if(carX < -120 || carY < -120 || carX > width + 120 || carY > height + 120) {
-            carX = width/2;
-            carY = height/2;
+            carX = 0;
+            carY = 0;
 //            carVel = 0;
-        }
+        }*/
+
+        myPlayer.add(2);
 
         input.tick();
     }
@@ -267,29 +270,16 @@ public class Client extends Canvas implements Runnable{
         //put stuff to render
         g.setColor(new Color(69, 183, 34));
         g.fillRect(0, 0, width, height);
-        g.setColor(new Color(41, 41, 41));
-        g.fillRect(width / 3, 0, width / 3, height);
-        g.setColor(new Color(139, 139, 139));
-        g.fillRect(width / 3, 0, 2, height);
-        g.fillRect(width / 3 + width / 3 - 1, 0, 2, height);
-        renderRotated(g, car, carX, carY, carAngle);
+        trackSprite.render(g,0,0,width,height);
 
         g.setColor(Color.WHITE);
-        g.drawString("vel:" + carVel, 0, 24);
-        g.drawString("angle:" + carAngle, 0, 48);
+        g.drawString("y:" + myPlayer.getX(), 0, 24);
+        g.drawString("x:" + myPlayer.getY(), 0, 48);
 
 
         //stop stuff to render
         g.dispose();
         buffer.show();
-    }
-
-
-    private static void renderRotated(Graphics2D g, BufferedImage img, int x, int y, int angle) {
-        AffineTransform trans = new AffineTransform();
-        trans.setToTranslation(x, y);
-        trans.rotate(Math.toRadians(angle), img.getWidth() /2 , img.getHeight() /2);
-        g.drawImage(img, trans, null);
     }
 
 }

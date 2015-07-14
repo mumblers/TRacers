@@ -5,6 +5,19 @@ package mumblers.tracers.common;
  */
 public enum PlayerColour {
 
-    BLACK, GREEN, YELLOW, RED, BLUE
+    BLACK("car_black.png"),
+    GREEN("car_green.png"),
+    YELLOW("car_yellow.png"),
+    RED("car_red.png"),
+    BLUE("car_blue.png");
 
+    final String resourceLocation;
+
+    PlayerColour(String resourceLocation) {
+        this.resourceLocation = resourceLocation;
+    }
+
+    public String getResource() {
+        return resourceLocation;
+    }
 }
