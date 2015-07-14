@@ -29,6 +29,8 @@ public class ClientConnection implements Runnable {
         this.receivers = receivers;
         this.output = new PrintWriter(clientSocket.getOutputStream(), true);
         this.reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        this.thread = new Thread(this);
+        this.thread.start();
     }
 
 
@@ -44,7 +46,7 @@ public class ClientConnection implements Runnable {
                 Packet packet = Packet.decode(command);
                 for(PacketReceiver receiver : receivers) {
                     if(receiver.getPacketId() == packet.getId())
-                        receiver.onPacket(this.player, packet);
+                        receiver.onPacket(this.server, this, this.player, packet);
                 }
 
             }
