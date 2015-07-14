@@ -39,12 +39,13 @@ public class Packet {
         String[] splitted = message.split(":", 1);
         if(splitted.length != 2)
             throw new IllegalArgumentException("The message is not valid. Message content: '" + message + "'.");
+        int id;
         try{
-
+            id = Integer.valueOf(splitted[0]);
         }catch(Exception e){
-
+            throw new IllegalArgumentException("The message is not valid. Could not convert id to number.");
         }
-        int id = Integer.valueOf(splitted[0]);
-        return new Packet(splitted[0], splitted[1]);
+
+        return new Packet(id, splitted[1]);
     }
 }
