@@ -31,12 +31,12 @@ public class PlayerSprite extends Sprite {
 
     @Override
     public int getWidth() {
-        return 0;
+        return img.getWidth();
     }
 
     @Override
     public int getHeight() {
-        return 0;
+        return img.getHeight();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class PlayerSprite extends Sprite {
                               int xOff, int yOff) {
         AffineTransform trans = new AffineTransform();
         trans.setToTranslation(x, y);
-        trans.setToScale(xScale, yScale);
+//        trans.setToScale(xScale, yScale);
         trans.rotate(Math.toRadians(angle), xOff, yOff);
         g.drawImage(img, trans, null);
     }

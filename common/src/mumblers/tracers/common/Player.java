@@ -11,6 +11,7 @@ public class Player {
     private int x = 0;
     private int y = 0;
     private int rotation = 0;
+    private double velocity = 0;
 
     public Player(PlayerColour colour, String name){
         this.name = name;
@@ -37,17 +38,34 @@ public class Player {
         return y;
     }
 
-    public void add(int a) {
-        x+=a;
-        y+=a;
+    //temp
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    //temp
+    public void setY(int y) {
+        this.y = y;
     }
 
     public int getRotation() {
         return rotation;
     }
 
+    public double getVelocity() {
+        return velocity;
+    }
+
     public void setColour(PlayerColour colour) {
         this.color = colour;
     }
-    
+
+    /**
+     * Move based on the current velocity and rotation
+     */
+    public void move() {
+
+    }
+
+
 }

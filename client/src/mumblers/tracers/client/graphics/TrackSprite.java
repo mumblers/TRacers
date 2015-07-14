@@ -43,31 +43,52 @@ public class TrackSprite extends Sprite {
     }
 
     @Override
-    public void render(Graphics2D g, int x, int y, int width, int height) {
-        int middleX = width/2;
-        int middleY = height/2;
+    public void render(Graphics2D g, int x, int y, int windowWidth, int windowHeight) {
+        int windowCenterX = windowWidth / 2;
+        int windowCenterY = windowHeight / 2;
 
-        int xLeft = player.getX() - middleX;
-        int yUp = player.getY() - middleY;
-        int tileX = xLeft / TILE_SIZE;
-        int tileY = yUp / TILE_SIZE;
-        int tileWidth = width / TILE_SIZE + 1;
-        int tileHeight = height / TILE_SIZE + 1;
-        int xRender = player.getX() % TILE_SIZE;
-        int yRender = player.getY() % TILE_SIZE;
-        for(int xx = 0; xx < tileX + tileWidth; xx++) {
-            for(int yy = 0; yy < tileY + tileHeight; yy++) {
+        int viewportPixelX = player.getX() - windowCenterX;
+        int viewportPixelY = player.getY() - windowCenterY;
+
+        int viewportTileX = viewportPixelX / TILE_SIZE;
+        int viewportTileY = viewportPixelY / TILE_SIZE;
+
+        int viewportTileWidth = windowWidth / TILE_SIZE + 1;
+        int viewportTileHeight = windowHeight / TILE_SIZE + 1;
+
+        int xRender;
+        if(viewportPixelX < 0) {
+            xRender = -viewportPixelX % TILE_SIZE;
+        } else {
+            xRender = -((viewportPixelX + TILE_SIZE) % TILE_SIZE);
+
+        }
+        int yBase;
+
+        if(viewportPixelY < 0) {
+            yBase = -viewportPixelY % TILE_SIZE;
+        } else {
+            yBase = -((viewportPixelY + TILE_SIZE) % TILE_SIZE);
+        }
+
+        int yRender = yBase;
+
+        for(int xx = viewportTileX; xx <= viewportTileX + viewportTileWidth; xx++) {
+            for(int yy = viewportTileY; yy <= viewportTileY + viewportTileHeight; yy++) {
                 int id = track.getTileAt(xx, yy);
                 if(id !=0) {
                     if(id == 1) {
                         g.drawImage(getRoad(xx, yy), xRender, yRender, TILE_SIZE, TILE_SIZE, null);
                     }
                 }
-                xRender += TILE_SIZE;
                 yRender += TILE_SIZE;
             }
+            xRender += TILE_SIZE;
+            yRender = yBase;
+
+//            yRender = viewportPixelY < 0 ? viewportPixelY % TILE_SIZE : -((viewportPixelY + TILE_SIZE) % TILE_SIZE);
         }
-        playerSprite.render(g,width/2,height/2);
+        playerSprite.render(g,windowWidth/2,windowHeight/2);
     }
 
 

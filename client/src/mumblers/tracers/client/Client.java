@@ -15,6 +15,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
@@ -34,7 +35,6 @@ public class Client extends Canvas implements Runnable{
 
     private static final int CAR_ACC = 2;
     private static final int MAX_VEL = 80;
-    private static int TURN_SPEED = 2;
     private static final String TITLE = "TRacers";
     public static final int SLEEPTIME = 2;
     /**
@@ -59,13 +59,11 @@ public class Client extends Canvas implements Runnable{
 
     private Player myPlayer = new Player(PlayerColour.BLACK, "Davidot");
     private Track track = new Track();
+    private PlayerController playerController;
 
 
-    private int carAngle = 0;
-    private int carX;
-    private int carY;
+
     private Input input;
-    private int carVel = 0;
     private TrackSprite trackSprite;
 
     private List<Player> players = new ArrayList<>();
@@ -84,9 +82,8 @@ public class Client extends Canvas implements Runnable{
             }
         });
         input = new Input(this);
-        carX = width/2;
-        carY = height/2;
         trackSprite = new TrackSprite(track, myPlayer);
+        playerController = new PlayerController(input, myPlayer);
     }
 
     public static void main(String[] args) {
@@ -128,6 +125,7 @@ public class Client extends Canvas implements Runnable{
     private void resizeFrame(Dimension size) {
         this.width = size.width;
         this.height = size.height;
+        System.out.println("NEW FRAME SIZE::" + size);
     }
 
     /**
@@ -193,7 +191,6 @@ public class Client extends Canvas implements Runnable{
                 shouldRender = true;
             }
 
-
             if(shouldRender) {
                 frames++;
                 render();
@@ -222,42 +219,21 @@ public class Client extends Canvas implements Runnable{
     }
 
     public void tick() {
-        /*if(input.left.isPressed()) {
-            if(!input.right.isPressed()) {
-                carAngle -= TURN_SPEED;
-            }
-        } else if(input.right.isPressed()){
-            carAngle += TURN_SPEED;
+        if(input.reverse.isPressed()){
+            myPlayer.setY(myPlayer.getY() + 10);
+        }
+        if(input.forward.isPressed()){
+            myPlayer.setY(myPlayer.getY() - 10);
         }
 
-        if(carVel < 0) {
-            carVel = Math.min(carVel + CAR_ACC -1,0);
-        } else if(carVel > 0) {
-            carVel = Math.max(carVel - CAR_ACC +1, 0);
+        if(input.right.isPressed()){
+            myPlayer.setX(myPlayer.getX()+10);
         }
-
-        if(input.forward.isPressed()) {
-            carVel += CAR_ACC + 1;
-            carVel = Math.min(MAX_VEL, carVel);
+        if(input.left.isPressed()){
+            myPlayer.setX(myPlayer.getX()-10);
         }
-
-        if(input.reverse.isPressed()) {
-            carVel -= CAR_ACC + 1;
-            carVel = Math.max(-MAX_VEL, carVel);
-        }
-
-        carX += carVel * Math.cos(Math.toRadians(carAngle)) ;
-        carY += carVel * Math.sin(Math.toRadians(carAngle)) ;
-
-        if(carX < -120 || carY < -120 || carX > width + 120 || carY > height + 120) {
-            carX = 0;
-            carY = 0;
-//            carVel = 0;
-        }*/
-
-        myPlayer.add(2);
-
         input.tick();
+        playerController.tick();
     }
 
     public void render() {
@@ -268,14 +244,17 @@ public class Client extends Canvas implements Runnable{
             return;
         }
         Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
+        g.setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
         //put stuff to render
         g.setColor(new Color(69, 183, 34));
         g.fillRect(0, 0, width, height);
         trackSprite.render(g,0,0,width,height);
 
         g.setColor(Color.WHITE);
-        g.drawString("y:" + myPlayer.getX(), 0, 24);
-        g.drawString("x:" + myPlayer.getY(), 0, 48);
+        g.drawString("y:" + myPlayer.getY(), 0, 24);
+        g.drawString("x:" + myPlayer.getX(), 0, 48);
 
 
         //stop stuff to render
