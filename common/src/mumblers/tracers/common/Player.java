@@ -9,8 +9,9 @@ public class Player {
     private String name;
     private PlayerColour colour;
 
-    public Player(String name){
+    public Player(PlayerColour colour, String name){
         this.name = name;
+        this.colour = colour;
     }
 
     public String getName() {

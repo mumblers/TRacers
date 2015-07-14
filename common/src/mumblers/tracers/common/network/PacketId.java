@@ -43,6 +43,7 @@ public class PacketId {
 
     /**
      * Sends the new location of the player.
+     * Format: playercolor;x;y;rotation
      */
     public static final int PLAYER_UPDATE = 5;
 

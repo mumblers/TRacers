@@ -19,6 +19,8 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Sinius15 on 14-7-2015.
@@ -59,6 +61,12 @@ public class Client extends Canvas implements Runnable{
     private int carY;
     private Input input;
     private int carVel = 0;
+
+    private List<Player> players = new ArrayList<>();
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 
     public Client(JFrame frame) {
         this.frame = frame;
