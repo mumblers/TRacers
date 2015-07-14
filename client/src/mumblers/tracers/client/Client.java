@@ -3,6 +3,7 @@ package mumblers.tracers.client;
 import mumblers.tracers.client.graphics.PlayerSprite;
 import mumblers.tracers.client.graphics.TrackSprite;
 import mumblers.tracers.common.Player;
+import mumblers.tracers.common.PlayerColour;
 import mumblers.tracers.common.Track;
 
 import javax.swing.JFrame;
@@ -56,7 +57,7 @@ public class Client extends Canvas implements Runnable{
 
     private Thread mainThread;
 
-    private Player myPlayer = new Player("HOI");
+    private Player myPlayer = new Player(PlayerColour.BLACK, "Davidot");
     private Track track = new Track();
 
 

@@ -30,13 +30,14 @@ public class ServerConnection extends Connection {
             case PacketId.PING: send(new Packet(PacketId.PING, "")); break;
             case PacketId.PLAYER_COLOUR: break;
             case PacketId.SERVER_FULL: System.exit(-1); break;
-            case PacketId.PLAYER_CONNECT: this.client.getPlayers().add(new Player()); break;
+            case PacketId.PLAYER_CONNECT: handlePlayerConnect(packet); break;
             case PacketId.PLAYER_UPDATE: handlePlayerUpdate(packet); break;
         }
     }
 
-    private void handlePlayerConnect(){
-
+    private void handlePlayerConnect(Packet packet){
+//        packet.getData()
+//        this.client.getPlayers().add(new Player());
     }
 
     private void handlePlayerUpdate(Packet packet) {

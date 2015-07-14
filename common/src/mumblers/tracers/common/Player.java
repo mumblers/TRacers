@@ -47,7 +47,7 @@ public class Player {
     }
 
     public void setColour(PlayerColour colour) {
-        this.colour = colour;
+        this.color = colour;
     }
     
 }

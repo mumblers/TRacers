@@ -1,6 +1,7 @@
 package mumblers.tracers.client;
 
 import mumblers.tracers.common.Player;
+import mumblers.tracers.common.PlayerColour;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -12,13 +13,13 @@ public class ClientPlayer extends Player {
 
     private ServerConnection socket;
 
-    public ClientPlayer(String name) throws IOException {
-        super(name);
+    public ClientPlayer(PlayerColour colour, String name, Client client) throws IOException {
+        super(colour, name);
 
         String ip = JOptionPane.showInputDialog("Server IP?");
         if(ip == null)
             return;
-        this.socket = new ServerConnection(this, ip);
+        this.socket = new ServerConnection(client, ip);
     }
 
 
