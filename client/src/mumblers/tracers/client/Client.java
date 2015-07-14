@@ -225,7 +225,7 @@ public class Client extends Canvas implements Runnable{
         }
 
         if(input.forward.isPressed()) {
-            carVel += CAR_ACC + 2;
+            carVel += CAR_ACC + 1;
             carVel = Math.min(MAX_VEL, carVel);
         }
 

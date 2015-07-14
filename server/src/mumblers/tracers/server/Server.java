@@ -1,10 +1,8 @@
 package mumblers.tracers.server;
 
 import mumblers.tracers.common.Constants;
-import mumblers.tracers.common.Packet;
-import mumblers.tracers.common.PacketId;
 import mumblers.tracers.common.PlayerColour;
-import mumblers.tracers.server.receivers.PacketReceiver;
+import mumblers.tracers.common.network.PacketReceiver;
 import mumblers.tracers.server.receivers.PlayerConnectReceiver;
 
 import java.io.IOException;
@@ -23,13 +21,13 @@ public class Server implements Runnable{
     private ServerSocket serverSocket;
     private List<PacketReceiver> receivers;
     private List<ClientConnection> clients;
-    private List<PlayerColour> avalableColours;
+    private List<PlayerColour> availableColours;
     boolean running = false;
 
     public Server() throws IOException {
         receivers = new ArrayList<>();
         receivers.add(new PlayerConnectReceiver());
-        avalableColours = Arrays.asList(PlayerColour.values());
+        availableColours = Arrays.asList(PlayerColour.values());
     }
 
     public void startServer() throws IOException {
@@ -50,7 +48,11 @@ public class Server implements Runnable{
         }
     }
 
-    public List<PlayerColour> getAvalableColours() {
-        return avalableColours;
+    public List<ClientConnection> getConnections(){
+        return clients;
+    }
+
+    public List<PlayerColour> getAvailableColours() {
+        return availableColours;
     }
 }

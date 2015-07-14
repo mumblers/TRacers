@@ -7,6 +7,7 @@ package mumblers.tracers.common;
 public class Player {
 
     private String name;
+    private PlayerColour colour;
 
     public Player(String name){
         this.name = name;
@@ -18,5 +19,13 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setColour(PlayerColour colour) {
+        this.colour = colour;
+    }
+
+    public PlayerColour getColour() {
+        return colour;
     }
 }

@@ -1,4 +1,4 @@
-package mumblers.tracers.common;
+package mumblers.tracers.common.network;
 
 /**
  * Created by Sinius15 on 14-7-2015.
@@ -36,7 +36,7 @@ public class Packet {
     }
 
     public static Packet decode(String message){
-        String[] splitted = message.split(":", 1);
+        String[] splitted = message.split(":", 2);
         if(splitted.length != 2)
             throw new IllegalArgumentException("The message is not valid. Message content: '" + message + "'.");
         int id;
@@ -58,7 +58,7 @@ public class Packet {
     }
 
     public static void main(String[] args){
-        Packet original = new Packet(50, "adsf");
+        Packet original = new Packet(50, "adsf:3fdafad");
         System.out.println(original);
 
         String encoded = original.encode();
