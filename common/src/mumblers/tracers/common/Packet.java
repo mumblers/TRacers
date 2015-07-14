@@ -42,7 +42,7 @@ public class Packet {
         try{
 
         }catch(Exception e){
-            
+
         }
         int id = Integer.valueOf(splitted[0]);
         return new Packet(splitted[0], splitted[1]);
