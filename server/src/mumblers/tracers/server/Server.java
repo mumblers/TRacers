@@ -42,11 +42,15 @@ public class Server implements Runnable{
         while(running){
             try {
                 Socket socket = serverSocket.accept();
-                ClientConnection client = new ClientConnection(socket, receivers);
+                ClientConnection client = new ClientConnection(this, socket, receivers);
                 clients.add(client);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<PlayerColour> getAvalableColours() {
+        return avalableColours;
     }
 }

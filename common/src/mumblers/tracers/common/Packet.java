@@ -48,4 +48,23 @@ public class Packet {
 
         return new Packet(id, splitted[1]);
     }
+
+    @Override
+    public String toString() {
+        return "Packet{" +
+                "id=" + id +
+                ", data='" + data + '\'' +
+                '}';
+    }
+
+    public static void main(String[] args){
+        Packet original = new Packet(50, "adsf");
+        System.out.println(original);
+
+        String encoded = original.encode();
+        System.out.println(encoded);
+
+        Packet received = Packet.decode(encoded);
+        System.out.println(received);
+    }
 }

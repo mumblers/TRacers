@@ -20,6 +20,12 @@ public class PlayerConnectReceiver extends PacketReceiver{
     @Override
     public void onPacket(Server server, ClientConnection clientConnection, Player player, Packet packet) {
         player.setName(packet.getData());
+        if(server.getAvalableColours().size() == 0) {
+            clientConnection.send(new Packet(PacketId.SERVER_FULL, ""));
+            clientConnection.close();
+        }
+
+        PlayerColour newColor = server.getAvalableColours().get(0);
         clientConnection.send(new Packet(PacketId.PLAYER_COLOUR, PlayerColour.BLACK.ordinal() + ""));
     }
 

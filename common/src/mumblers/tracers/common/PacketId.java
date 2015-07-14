@@ -15,7 +15,7 @@ public class PacketId {
      * this client is successfully connected. The data sent by this packet is
      * the name of this player. The server will respond with PLAYER_COLOUR packet
      */
-        public static int PLAYER_CONNECT = 1;
+    public static int PLAYER_CONNECT = 1;
 
     /**
      * Sent by the server to all players to inform that a has disconnected. The
@@ -29,6 +29,13 @@ public class PacketId {
      * to new players.
      */
     public static int PLAYER_COLOUR = 3;
+
+    /**
+     * This message is sent by the server to a new client when the server is full.
+     * After this message is sent the server will disconnect the connection to
+     * this client.
+     */
+    public static int SERVER_FULL = 4;
 
 
 

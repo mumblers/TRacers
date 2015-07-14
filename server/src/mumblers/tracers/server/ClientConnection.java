@@ -18,15 +18,17 @@ public class ClientConnection implements Runnable {
 
     private Player player;
 
+    private Server server;
     private PrintWriter output;
     private BufferedReader reader;
     private Socket socket;
     private List<PacketReceiver> receivers;
     private Thread thread;
 
-    public ClientConnection(Socket clientSocket, List<PacketReceiver> receivers) throws IOException {
+    public ClientConnection(Server server, Socket clientSocket, List<PacketReceiver> receivers) throws IOException {
         this.socket = clientSocket;
         this.receivers = receivers;
+        this.server = server;
         this.output = new PrintWriter(clientSocket.getOutputStream(), true);
         this.reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         this.thread = new Thread(this);
@@ -43,23 +45,34 @@ public class ClientConnection implements Runnable {
         try {
             String command;
             while((command = reader.readLine()) != null) {
-                Packet packet = Packet.decode(command);
-                for(PacketReceiver receiver : receivers) {
-                    if(receiver.getPacketId() == packet.getId())
-                        receiver.onPacket(this.server, this, this.player, packet);
+                try{
+                    Packet packet = Packet.decode(command);
+                    for(PacketReceiver receiver : receivers) {
+                        if(receiver.getPacketId() == packet.getId())
+                            receiver.onPacket(this.server, this, this.player, packet);
+                    }
+                }catch(Exception e){
+                    e.printStackTrace();
                 }
 
             }
         } catch(IOException e) {
-            e.printStackTrace();
+            //do not do anything because the connection is being closed.
         }
+        this.close();
+    }
+
+    public void close() {
+        if(socket.isClosed())
+            return;
         try {
             socket.close();
             reader.close();
             if(output != null)
                 output.close();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        //the receiving thread should not be closed because it will close automaticly
     }
 }
