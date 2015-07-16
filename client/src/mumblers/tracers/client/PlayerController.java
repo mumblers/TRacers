@@ -9,6 +9,10 @@ import mumblers.tracers.common.Player;
  */
 public class PlayerController {
 
+    private static final double ACC_FORWARD = 3.85;
+    private static final double ACC_REVERSE = 1.85;
+    private static final int TURN_SPEED = 3;
+
     private final Input input;
     private final Player player;
 
@@ -41,15 +45,25 @@ public class PlayerController {
             carVel -= CAR_ACC + 1;
             carVel = Math.max(-MAX_VEL, carVel);
         }
+        */
 
-        carX += carVel * Math.cos(Math.toRadians(carAngle)) ;
-        carY += carVel * Math.sin(Math.toRadians(carAngle)) ;
+        if(input.left.isPressed() && !input.right.isPressed()) {
+            player.turn(-TURN_SPEED);
+        } else if(input.right.isPressed() && !input.left.isPressed()) {
+            player.turn(TURN_SPEED);
+        }
 
-        if(carX < -120 || carY < -120 || carX > width + 120 || carY > height + 120) {
-            carX = 0;
-            carY = 0;
-//            carVel = 0;
-        }*/
+        double acc = 0.0;
+        if(input.forward.isPressed() && !input.reverse.isPressed()) {
+            acc += ACC_FORWARD;
+        }
+
+        if(input.reverse.isPressed() && !input.forward.isPressed()) {
+            acc -= ACC_REVERSE;
+        }
+
+        player.accelerate(acc);
+        player.move();
     }
 
 

@@ -6,12 +6,16 @@ package mumblers.tracers.common;
  */
 public class Player {
 
+    public static final double MAX_VELOCITY = 60.0;
+
+    public static final double MIN_VEL = 0.9;
     private String name;
     private PlayerColour color = PlayerColour.BLACK;
-    private int x = 0;
-    private int y = 0;
-    private int rotation = 0;
+    private double x = 0;
+    private double y = 0;
+    private double rotation = 0;
     private double velocity = 0;
+    private int cooldown = 0;
 
     public Player(PlayerColour colour, String name){
         this.name = name;
@@ -30,25 +34,16 @@ public class Player {
         return color;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    //temp
-    public void setX(int x) {
-        this.x = x;
-    }
 
-    //temp
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getRotation() {
+    public double getRotation() {
         return rotation;
     }
 
@@ -64,8 +59,33 @@ public class Player {
      * Move based on the current velocity and rotation
      */
     public void move() {
-
+        if(cooldown > 0) {
+            cooldown--;
+            //we can return since velocity is zero
+            return;
+        }
+        x += velocity * Math.cos(Math.toRadians(rotation));
+        y += velocity * Math.sin(Math.toRadians(rotation));
+        //show down form resistance with ground
+        velocity -= MovementUtil.friction(velocity);
     }
 
 
+    public void accelerate(double acc) {
+        if(cooldown > 0) {
+            return;
+        }
+//        double v = Math.abs(velocity) + 0.00001;
+//        double nVelocity = velocity + acc * (1/v);
+        double nVelocity = MovementUtil.accelerate(velocity, acc);
+        if(nVelocity < 0.0 && velocity > 0.1 || nVelocity > 0.0 && velocity < -0.1) {
+            nVelocity = 0.0;
+            cooldown = 25;
+        }
+        velocity = nVelocity;
+    }
+
+    public void turn(int speed) {
+        rotation += MovementUtil.rotate(speed, velocity);
+    }
 }

@@ -219,19 +219,6 @@ public class Client extends Canvas implements Runnable{
     }
 
     public void tick() {
-        if(input.reverse.isPressed()){
-            myPlayer.setY(myPlayer.getY() + 10);
-        }
-        if(input.forward.isPressed()){
-            myPlayer.setY(myPlayer.getY() - 10);
-        }
-
-        if(input.right.isPressed()){
-            myPlayer.setX(myPlayer.getX()+10);
-        }
-        if(input.left.isPressed()){
-            myPlayer.setX(myPlayer.getX()-10);
-        }
         input.tick();
         playerController.tick();
     }
@@ -254,7 +241,8 @@ public class Client extends Canvas implements Runnable{
 
         g.setColor(Color.WHITE);
         g.drawString("y:" + myPlayer.getY(), 0, 24);
-        g.drawString("x:" + myPlayer.getX(), 0, 48);
+        g.drawString("x:" + myPlayer.getX(), 0, 36);
+        g.drawString("v:" + myPlayer.getVelocity(), 0, 48);
 
 
         //stop stuff to render

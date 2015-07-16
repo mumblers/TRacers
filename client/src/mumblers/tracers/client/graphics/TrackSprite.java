@@ -47,8 +47,8 @@ public class TrackSprite extends Sprite {
         int windowCenterX = windowWidth / 2;
         int windowCenterY = windowHeight / 2;
 
-        int viewportPixelX = player.getX() - windowCenterX;
-        int viewportPixelY = player.getY() - windowCenterY;
+        int viewportPixelX = (int) (player.getX() - windowCenterX);
+        int viewportPixelY = (int) (player.getY() - windowCenterY);
 
         int viewportTileX = viewportPixelX / TILE_SIZE;
         int viewportTileY = viewportPixelY / TILE_SIZE;

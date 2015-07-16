@@ -41,7 +41,7 @@ public class PlayerSprite extends Sprite {
 
     @Override
     public void render(Graphics2D g, int x, int y, int width, int height) {
-        renderRotated(g,x,y,player.getRotation());
+        renderRotated(g,x,y, (int) player.getRotation());
     }
 
     @Override
