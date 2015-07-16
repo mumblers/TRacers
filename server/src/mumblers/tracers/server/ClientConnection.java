@@ -1,14 +1,11 @@
 package mumblers.tracers.server;
 
-import mumblers.tracers.common.network.Packet;
 import mumblers.tracers.common.Player;
 import mumblers.tracers.common.network.Connection;
+import mumblers.tracers.common.network.Packet;
 import mumblers.tracers.common.network.PacketReceiver;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 
