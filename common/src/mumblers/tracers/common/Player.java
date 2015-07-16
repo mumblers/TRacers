@@ -42,6 +42,17 @@ public class Player {
         return y;
     }
 
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
+    }
 
     public double getRotation() {
         return rotation;

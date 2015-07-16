@@ -31,7 +31,7 @@ public abstract class Connection implements Runnable{
             while((command = reader.readLine()) != null) {
                 try{
                     Packet packet = Packet.decode(command);
-
+                    handlePacket(packet);
                 }catch(Exception e){
                     e.printStackTrace();
                 }

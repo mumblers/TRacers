@@ -50,13 +50,7 @@ public class Client implements DisplayRenderer{
         display.start();
     }
 
-    public static void main(String[] args) {
-        new Client();
-    }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
 
     @Override
     public void tick() {
@@ -83,7 +77,26 @@ public class Client implements DisplayRenderer{
 
         //stop stuff to render
         g.dispose();
+    }
 
+    public static void main(String[] args) {
+        new Client();
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Player getPlayerByColor(PlayerColour color){
+        for(Player p : getPlayers()){
+            if(p.getColor() == color)
+                return p;
+        }
+        return null;
+    }
+
+    public Player getMyPlayer(){
+        return myPlayer;
     }
 
 }

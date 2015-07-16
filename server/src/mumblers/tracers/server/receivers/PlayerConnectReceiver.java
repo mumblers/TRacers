@@ -30,12 +30,6 @@ public class PlayerConnectReceiver extends PacketReceiver {
         PlayerColour newColour = clientConnection.getServer().getAvailableColours().get(0);
         player.setColour(newColour);
         clientConnection.send(new Packet(PacketId.PLAYER_COLOUR, PlayerColour.BLACK.ordinal() + ""));
-
-        for(ClientConnection c : clientConnection.getServer().getConnections()){
-            if(c.equals(clientConnection))
-                continue;
-            c.send(new Packet(PacketId.PLAYER_CONNECT, newColour.ordinal()+";"+player.getName()));
-        }
     }
 
 }

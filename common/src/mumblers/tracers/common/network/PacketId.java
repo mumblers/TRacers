@@ -14,10 +14,6 @@ public class PacketId {
      * This message is sent by the client to the server to let the server know
      * this client is successfully connected. The data sent by this packet is
      * the name of this player. The server will respond with PLAYER_COLOUR packet.
-     *
-     * The Server sends this message to all players except the new one
-     * when a new player connects. The data of the message contains something like
-     * '4;sinius'. So a player named sinius has connected with color 4.
      */
     public static final int PLAYER_CONNECT = 1;
 
@@ -43,7 +39,7 @@ public class PacketId {
 
     /**
      * Sends the new location of the player.
-     * Format: playercolor;x;y;rotation
+     * Format: playercolor;x;y;rotation;playername
      */
     public static final int PLAYER_UPDATE = 5;
 
