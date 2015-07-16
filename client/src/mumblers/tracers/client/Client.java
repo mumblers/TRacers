@@ -59,6 +59,12 @@ public class Client implements DisplayRenderer{
     }
 
     @Override
+    public void tick() {
+        input.tick();
+        playerController.tick();
+    }
+
+    @Override
     public void render(BufferStrategy buffer, Dimension size) {
 
         Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
@@ -72,44 +78,12 @@ public class Client implements DisplayRenderer{
 
         g.setColor(Color.WHITE);
         g.drawString("y:" + myPlayer.getY(), 0, 24);
-        g.drawString("x:" + myPlayer.getX(), 0, 48);
-
-
-        //stop stuff to render
-        g.dispose();
-    }
-
-    @Override
-    public void tick() {
-        input.tick();
-        playerController.tick();
-    }
-
-    public void render() {
-        BufferStrategy buffer = getBufferStrategy();
-        if(buffer == null) {
-            this.createBufferStrategy(2);
-            requestFocus();
-            return;
-        }
-        Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
-        g.setRenderingHint(
-                RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        //put stuff to render
-        g.setColor(new Color(69, 183, 34));
-        g.fillRect(0, 0, width, height);
-        trackSprite.render(g,0,0,width,height);
-
-        g.setColor(Color.WHITE);
-        g.drawString("y:" + myPlayer.getY(), 0, 24);
         g.drawString("x:" + myPlayer.getX(), 0, 36);
         g.drawString("v:" + myPlayer.getVelocity(), 0, 48);
 
-
         //stop stuff to render
         g.dispose();
-        buffer.show();
+
     }
 
 }
