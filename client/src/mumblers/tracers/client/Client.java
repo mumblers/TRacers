@@ -5,12 +5,14 @@ import mumblers.tracers.common.Player;
 import mumblers.tracers.common.PlayerColour;
 import mumblers.tracers.common.Track;
 
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,20 @@ public class Client implements DisplayRenderer{
 
     private Input input;
 
+    private ServerConnection connection;
+
     public Client() {
+        String ip = JOptionPane.showInputDialog("IP", "localhost");
+        if(ip == null)
+            System.exit(0);
+        try {
+            connection = new ServerConnection(this, ip);
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "could not connect to server.");
+            System.exit(0);
+        }
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch(Throwable e) {
@@ -56,6 +71,10 @@ public class Client implements DisplayRenderer{
     public void tick() {
         input.tick();
         playerController.tick();
+        connection.sendPlayerUpdate();
+
+        if(getPlayers().size() > 0)
+            System.out.println(getPlayers().get(0).getX());
     }
 
     @Override

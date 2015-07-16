@@ -27,5 +27,6 @@ public class PlayerUpdateReceiver extends PacketReceiver{
                 continue;
             c.send(packet);
         }
+
     }
 }

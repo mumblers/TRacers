@@ -4,6 +4,7 @@ import mumblers.tracers.common.Constants;
 import mumblers.tracers.common.PlayerColour;
 import mumblers.tracers.common.network.PacketReceiver;
 import mumblers.tracers.server.receivers.PlayerConnectReceiver;
+import mumblers.tracers.server.receivers.PlayerUpdateReceiver;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -27,12 +28,15 @@ public class Server implements Runnable{
     public Server() throws IOException {
         receivers = new ArrayList<>();
         receivers.add(new PlayerConnectReceiver());
+        receivers.add(new PlayerUpdateReceiver());
         availableColours = Arrays.asList(PlayerColour.values());
+        clients = new ArrayList<>();
     }
 
     public void startServer() throws IOException {
         serverSocket = new ServerSocket(Constants.SERVER_PORT);
         running = true;
+        new Thread(this).start();
     }
 
     @Override
@@ -40,6 +44,8 @@ public class Server implements Runnable{
         while(running){
             try {
                 Socket socket = serverSocket.accept();
+                if(socket == null)
+                    continue;
                 ClientConnection client = new ClientConnection(this, socket, receivers);
                 clients.add(client);
             } catch (IOException e) {
@@ -54,5 +60,15 @@ public class Server implements Runnable{
 
     public List<PlayerColour> getAvailableColours() {
         return availableColours;
+    }
+
+    public static void main(String[] args){
+        Server s = null;
+        try {
+            s = new Server();
+            s.startServer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
