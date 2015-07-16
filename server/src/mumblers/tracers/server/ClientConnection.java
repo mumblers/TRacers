@@ -39,7 +39,7 @@ public class ClientConnection extends Connection {
     public void close() {
         super.close();
         server.getConnections().remove(this);
-        server.getAvailableColours().add(this.player.getColour());
+        server.getAvailableColours().add(this.player.getColor());
     }
 
     public Server getServer(){

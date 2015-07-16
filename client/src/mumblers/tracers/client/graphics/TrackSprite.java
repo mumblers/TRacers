@@ -1,6 +1,7 @@
 package mumblers.tracers.client.graphics;
 
 import mumblers.tracers.client.Client;
+import mumblers.tracers.client.Display;
 import mumblers.tracers.common.Player;
 import mumblers.tracers.common.Track;
 
@@ -21,7 +22,7 @@ public class TrackSprite extends Sprite {
 
 
     private static final int SCALE = 4;
-    public static final int TILE_SIZE = Client.TILE_SIZE;
+    public static final int TILE_SIZE = Display.TILE_SIZE;
     private final Track track;
     private final Player player;
     private final PlayerSprite playerSprite;
