@@ -2,7 +2,7 @@ package mumblers.tracers.client;
 
 import mumblers.tracers.common.Constants;
 import mumblers.tracers.common.Player;
-import mumblers.tracers.common.PlayerColour;
+import mumblers.tracers.common.PlayerColor;
 import mumblers.tracers.common.network.Connection;
 import mumblers.tracers.common.network.Packet;
 import mumblers.tracers.common.network.PacketId;
@@ -33,9 +33,8 @@ public class ServerConnection extends Connection {
     }
 
     private void handlePlayerColour(Packet packet) {
-        PlayerColour playerColor = PlayerColour.values()[Integer.valueOf(packet.getData())];
-        client.getMyPlayer().setColour(playerColor);
-        client.
+        PlayerColor playerColor = PlayerColor.values()[Integer.valueOf(packet.getData())];
+        client.getTrackingPlayer().setColour(playerColor);
     }
 
     private void handlePlayerUpdate(Packet packet) {
@@ -43,7 +42,7 @@ public class ServerConnection extends Connection {
         if(dataParts.length != 5){
             throw new IllegalArgumentException("Could not decode PlayerUpdatePacket. content: " + packet.getData());
         }
-        PlayerColour playerColor = PlayerColour.values()[Integer.valueOf(dataParts[0])];
+        PlayerColor playerColor = PlayerColor.values()[Integer.valueOf(dataParts[0])];
         double x = Double.valueOf(dataParts[1]);
         double y = Double.valueOf(dataParts[2]);
         double r = Double.valueOf(dataParts[3]);
@@ -60,7 +59,7 @@ public class ServerConnection extends Connection {
     }
 
     public void sendPlayerUpdate() {
-        Player player = client.getMyPlayer();
+        Player player = client.getTrackingPlayer();
         send(new Packet(PacketId.PLAYER_UPDATE, player.getColor().ordinal() + ";" + player.getX() + ";" +player.getY() + ";" + player.getRotation() + ";" + player.getName()));
     }
 }

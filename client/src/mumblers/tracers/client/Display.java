@@ -9,6 +9,7 @@ import javax.swing.WindowConstants;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
@@ -22,9 +23,6 @@ public class Display extends Canvas implements Runnable {
     public static final int IMG_SIZE = 128;
     public static final int SCALE = 4;
     public static final int TILE_SIZE = IMG_SIZE * SCALE;
-
-    private static final int CAR_ACC = 2;
-    private static final int MAX_VEL = 80;
 
     public static final int SLEEPTIME = 2;
 
@@ -133,9 +131,7 @@ public class Display extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - lastTimer > 1000) {
                 lastTimer += 1000;
-                if(frame != null) {
-                    frame.setTitle(title + " | " + frames + " fps | " + ticks + " ticks");
-                }
+                frame.setTitle(title + " | " + frames + " fps | " + ticks + " ticks");
                 frames = 0;
                 ticks = 0;
             }
@@ -184,8 +180,9 @@ public class Display extends Canvas implements Runnable {
             requestFocus();
             return;
         }
-        renderer.render(buffer, new Dimension(width, height));
-
+        Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
+        renderer.render(g, new Dimension(width, height));
+        g.dispose();
         buffer.show();
     }
 

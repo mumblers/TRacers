@@ -1,8 +1,9 @@
 package mumblers.tracers.client.graphics;
 
-import mumblers.tracers.client.Client;
 import mumblers.tracers.client.Display;
+import mumblers.tracers.client.PlayerSupplier;
 import mumblers.tracers.common.Player;
+import mumblers.tracers.common.PlayerColor;
 import mumblers.tracers.common.Track;
 
 import javax.imageio.ImageIO;
@@ -11,6 +12,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -24,13 +26,14 @@ public class TrackSprite extends Sprite {
     private static final int SCALE = 4;
     public static final int TILE_SIZE = Display.TILE_SIZE;
     private final Track track;
-    private final Player player;
-    private final PlayerSprite playerSprite;
+    private final PlayerSupplier playerSupplier;
 
-    public TrackSprite(Track track, Player player) {
+    private final HashMap<Player,PlayerSprite> playerSprites = new HashMap<>(
+            PlayerColor.values().length);
+
+    public TrackSprite(Track track, PlayerSupplier playerSupplier) {
         this.track = track;
-        this.player = player;
-        this.playerSprite = new PlayerSprite(player);
+        this.playerSupplier = playerSupplier;
     }
 
     @Override
@@ -48,8 +51,8 @@ public class TrackSprite extends Sprite {
         int windowCenterX = windowWidth / 2;
         int windowCenterY = windowHeight / 2;
 
-        int viewportPixelX = (int) (player.getX() - windowCenterX);
-        int viewportPixelY = (int) (player.getY() - windowCenterY);
+        int viewportPixelX = (int) (playerSupplier.getTrackingPlayer().getX() - windowCenterX);
+        int viewportPixelY = (int) (playerSupplier.getTrackingPlayer().getY() - windowCenterY);
 
         int viewportTileX = viewportPixelX / TILE_SIZE;
         int viewportTileY = viewportPixelY / TILE_SIZE;
@@ -89,7 +92,19 @@ public class TrackSprite extends Sprite {
 
 //            yRender = viewportPixelY < 0 ? viewportPixelY % TILE_SIZE : -((viewportPixelY + TILE_SIZE) % TILE_SIZE);
         }
-        playerSprite.render(g,windowWidth/2,windowHeight/2);
+
+        Collection<Player> players = playerSupplier.getPlayers();
+        players.add(playerSupplier.getTrackingPlayer());
+        for(Player player: players) {
+            PlayerSprite sprite;
+            if(playerSprites.containsKey(player)) {
+                sprite = playerSprites.get(player);
+            } else {
+                sprite = new PlayerSprite(player);
+                playerSprites.put(player,sprite);
+            }
+            sprite.render(g, (int)player.getX() - viewportPixelX, (int)player.getY() - viewportPixelY);
+        }
     }
 
 
