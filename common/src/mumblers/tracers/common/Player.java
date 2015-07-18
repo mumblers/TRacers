@@ -10,14 +10,14 @@ public class Player {
 
     public static final double MIN_VEL = 0.9;
     private String name;
-    private PlayerColour color = PlayerColour.BLACK;
+    private PlayerColor color = PlayerColor.BLACK;
     private double x = 0;
     private double y = 0;
     private double rotation = 0;
     private double velocity = 0;
     private int cooldown = 0;
 
-    public Player(PlayerColour colour, String name){
+    public Player(PlayerColor colour, String name){
         this.name = name;
         this.color = colour;
     }
@@ -30,7 +30,7 @@ public class Player {
         this.name = name;
     }
 
-    public PlayerColour getColor() {
+    public PlayerColor getColor() {
         return color;
     }
 
@@ -62,7 +62,7 @@ public class Player {
         return velocity;
     }
 
-    public void setColour(PlayerColour colour) {
+    public void setColour(PlayerColor colour) {
         this.color = colour;
     }
 

@@ -1,7 +1,7 @@
 package mumblers.tracers.server;
 
 import mumblers.tracers.common.Constants;
-import mumblers.tracers.common.PlayerColour;
+import mumblers.tracers.common.PlayerColor;
 import mumblers.tracers.common.network.PacketReceiver;
 import mumblers.tracers.server.receivers.PlayerConnectReceiver;
 import mumblers.tracers.server.receivers.PlayerUpdateReceiver;
@@ -22,14 +22,14 @@ public class Server implements Runnable{
     private ServerSocket serverSocket;
     private List<PacketReceiver> receivers;
     private List<ClientConnection> clients;
-    private List<PlayerColour> availableColours;
+    private List<PlayerColor> availableColours;
     boolean running = false;
 
     public Server() throws IOException {
         receivers = new ArrayList<>();
         receivers.add(new PlayerConnectReceiver());
         receivers.add(new PlayerUpdateReceiver());
-        availableColours = Arrays.asList(PlayerColour.values());
+        availableColours = Arrays.asList(PlayerColor.values());
         clients = new ArrayList<>();
     }
 
@@ -58,7 +58,7 @@ public class Server implements Runnable{
         return clients;
     }
 
-    public List<PlayerColour> getAvailableColours() {
+    public List<PlayerColor> getAvailableColours() {
         return availableColours;
     }
 

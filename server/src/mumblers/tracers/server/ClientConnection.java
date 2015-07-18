@@ -1,7 +1,7 @@
 package mumblers.tracers.server;
 
 import mumblers.tracers.common.Player;
-import mumblers.tracers.common.PlayerColour;
+import mumblers.tracers.common.PlayerColor;
 import mumblers.tracers.common.network.Connection;
 import mumblers.tracers.common.network.Packet;
 import mumblers.tracers.common.network.PacketReceiver;
@@ -22,7 +22,7 @@ public class ClientConnection extends Connection {
 
     public ClientConnection(Server server, Socket clientSocket, List<PacketReceiver> receivers) throws IOException {
         super(clientSocket);
-        this.player = new Player(PlayerColour.RED, "unknown");
+        this.player = new Player(PlayerColor.RED, "unknown");
         this.receivers = receivers;
         this.server = server;
     }

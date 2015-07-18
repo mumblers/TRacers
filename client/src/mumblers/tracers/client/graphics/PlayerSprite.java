@@ -2,7 +2,7 @@ package mumblers.tracers.client.graphics;
 
 import mumblers.tracers.client.Client;
 import mumblers.tracers.common.Player;
-import mumblers.tracers.common.PlayerColour;
+import mumblers.tracers.common.PlayerColor;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -19,14 +19,15 @@ import java.util.HashMap;
  */
 public class PlayerSprite extends Sprite {
 
-    private static HashMap<PlayerColour, BufferedImage> cars;
+    private static HashMap<PlayerColor, BufferedImage> cars;
 
     private final Player player;
-    private final BufferedImage img;
+    private PlayerColor color;
+    private BufferedImage img;
 
     public PlayerSprite(Player player) {
         this.player = player;
-        img = getImage(player);
+        getImage();
     }
 
     @Override
@@ -41,6 +42,9 @@ public class PlayerSprite extends Sprite {
 
     @Override
     public void render(Graphics2D g, int x, int y, int width, int height) {
+        if(color!= player.getColor()) {
+            getImage();
+        }
         renderRotated(g,x,y, (int) player.getRotation());
     }
 
@@ -54,6 +58,11 @@ public class PlayerSprite extends Sprite {
         g.drawImage(img, trans, null);
     }
 
+    private void getImage() {
+        img = getImage(player);
+        color = player.getColor();
+    }
+
     private static BufferedImage getImage(Player player) {
         if(cars == null) {
             loadSprites(Client.class);
@@ -63,8 +72,8 @@ public class PlayerSprite extends Sprite {
 
     public static void loadSprites(Class<?> clazz) {
         boolean error = false;
-        cars = new HashMap<>(PlayerColour.values().length);
-        for(PlayerColour color: PlayerColour.values()) {
+        cars = new HashMap<>(PlayerColor.values().length);
+        for(PlayerColor color: PlayerColor.values()) {
             try {
                 cars.put(color, ImageIO.read(clazz.getResourceAsStream(color.getResource())));
             } catch(IOException e) {

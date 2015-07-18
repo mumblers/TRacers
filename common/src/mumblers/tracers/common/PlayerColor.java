@@ -3,7 +3,7 @@ package mumblers.tracers.common;
 /**
  * Created by Sinius15 on 14-7-2015.
  */
-public enum PlayerColour {
+public enum PlayerColor {
 
     BLACK("car_black.png"),
     GREEN("car_green.png"),
@@ -13,7 +13,7 @@ public enum PlayerColour {
 
     final String resourceLocation;
 
-    PlayerColour(String resourceLocation) {
+    PlayerColor(String resourceLocation) {
         this.resourceLocation = resourceLocation;
     }
 
