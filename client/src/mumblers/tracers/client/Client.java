@@ -35,10 +35,7 @@ public class Client implements DisplayRenderer{
 
     private ServerConnection connection;
 
-    public Client() {
-        String ip = JOptionPane.showInputDialog("IP", "localhost");
-        if(ip == null)
-            System.exit(0);
+    public Client(String ip) {
         try {
             connection = new ServerConnection(this, ip);
         } catch (IOException e) {
@@ -96,10 +93,6 @@ public class Client implements DisplayRenderer{
 
         //stop stuff to render
         g.dispose();
-    }
-
-    public static void main(String[] args) {
-        new Client();
     }
 
     public List<Player> getPlayers() {

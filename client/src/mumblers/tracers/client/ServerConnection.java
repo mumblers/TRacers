@@ -35,7 +35,6 @@ public class ServerConnection extends Connection {
     private void handlePlayerColour(Packet packet) {
         PlayerColour playerColor = PlayerColour.values()[Integer.valueOf(packet.getData())];
         client.getMyPlayer().setColour(playerColor);
-        client.
     }
 
     private void handlePlayerUpdate(Packet packet) {
