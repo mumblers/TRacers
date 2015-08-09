@@ -22,7 +22,7 @@ public class Client implements DisplayRenderer, PlayerSupplier {
 
     public static final String TITLE = "TRacers";
 
-    private Player myPlayer = new Player(PlayerColor.BLACK, "Davidot");
+    private Player myPlayer;
     private java.util.List<Player> players = new ArrayList<>();
 
     private Track track = new Track();
@@ -35,8 +35,12 @@ public class Client implements DisplayRenderer, PlayerSupplier {
     private ServerConnection connection;
 
     public Client(String ip) {
+        String playerName = JOptionPane.showInputDialog("Player Name?");
+        myPlayer = new Player(PlayerColor.YELLOW, playerName);
+
         try {
             connection = new ServerConnection(this, ip);
+            connection.sendPlayerConnectMessage();
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "could not connect to server.");
@@ -68,9 +72,6 @@ public class Client implements DisplayRenderer, PlayerSupplier {
         input.tick();
         playerController.tick();
         connection.sendPlayerUpdate();
-
-        if(getPlayers().size() > 0)
-            System.out.println(getPlayers().get(0).getX());
     }
 
 
@@ -105,6 +106,10 @@ public class Client implements DisplayRenderer, PlayerSupplier {
     @Override
     public Player getTrackingPlayer() {
         return myPlayer;
+    }
+
+    public static void main(String[] args) {
+        new Client("localhost");
     }
 
 }

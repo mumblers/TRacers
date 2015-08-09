@@ -34,6 +34,7 @@ public class ServerConnection extends Connection {
 
     private void handlePlayerColour(Packet packet) {
         PlayerColor playerColor = PlayerColor.values()[Integer.valueOf(packet.getData())];
+        System.out.println("Set color to "  + playerColor.name());
         client.getTrackingPlayer().setColour(playerColor);
     }
 
@@ -60,6 +61,11 @@ public class ServerConnection extends Connection {
 
     public void sendPlayerUpdate() {
         Player player = client.getTrackingPlayer();
-        send(new Packet(PacketId.PLAYER_UPDATE, player.getColor().ordinal() + ";" + player.getX() + ";" +player.getY() + ";" + player.getRotation() + ";" + player.getName()));
+        send(new Packet(PacketId.PLAYER_UPDATE, player.getColor().ordinal() + ";" + player.getX() + ";" + player.getY() + ";" + player.getRotation() + ";" + player.getName()));
+    }
+
+    public void sendPlayerConnectMessage() {
+        Player player = client.getTrackingPlayer();
+        send(new Packet(PacketId.PLAYER_CONNECT, player.getName()));
     }
 }

@@ -29,7 +29,7 @@ public class Server implements Runnable{
         receivers = new ArrayList<>();
         receivers.add(new PlayerConnectReceiver());
         receivers.add(new PlayerUpdateReceiver());
-        availableColours = Arrays.asList(PlayerColor.values());
+        availableColours = new ArrayList<>(Arrays.asList(PlayerColor.values()));
         clients = new ArrayList<>();
     }
 
@@ -48,6 +48,7 @@ public class Server implements Runnable{
                     continue;
                 ClientConnection client = new ClientConnection(this, socket, receivers);
                 clients.add(client);
+                System.out.println("New client connected...");
             } catch (IOException e) {
                 e.printStackTrace();
             }
