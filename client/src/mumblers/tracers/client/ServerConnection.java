@@ -7,19 +7,31 @@ import mumblers.tracers.common.network.Connection;
 import mumblers.tracers.common.network.Packet;
 import mumblers.tracers.common.network.PacketId;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.URL;
 
 /**
  * Created by Sinius15 on 14-7-2015.
  */
 public class ServerConnection extends Connection {
 
-    Client client;
+    private String serverIp = "unknown";
+    private Client client;
 
     public ServerConnection(Client client, String ip) throws IOException {
         super(new Socket(ip, Constants.SERVER_PORT));
         this.client = client;
+        if(ip.equals("localhost") || ip.equals("127.0.0.1")){
+            URL whatismyip = new URL("http://checkip.amazonaws.com");
+            BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
+            serverIp = in.readLine();
+        }else{
+            serverIp = ip;
+        }
+
     }
 
     @Override
@@ -67,5 +79,9 @@ public class ServerConnection extends Connection {
     public void sendPlayerConnectMessage() {
         Player player = client.getTrackingPlayer();
         send(new Packet(PacketId.PLAYER_CONNECT, player.getName()));
+    }
+
+    public String getServerIp() {
+        return serverIp;
     }
 }

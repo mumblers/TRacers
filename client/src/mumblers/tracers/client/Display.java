@@ -189,7 +189,6 @@ public class Display extends Canvas implements Runnable {
     private void resizeFrame(Dimension size) {
         this.width = size.width;
         this.height = size.height;
-        System.out.println("NEW FRAME SIZE::" + size);
     }
 
     public void setRenderer(DisplayRenderer renderer) {

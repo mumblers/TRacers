@@ -86,9 +86,10 @@ public class Client implements DisplayRenderer, PlayerSupplier {
         trackSprite.render(g, 0, 0, size.width, size.height);
 
         g.setColor(Color.WHITE);
-        g.drawString("y:" + myPlayer.getY(), 0, 24);
-        g.drawString("x:" + myPlayer.getX(), 0, 36);
-        g.drawString("v:" + myPlayer.getVelocity(), 0, 48);
+        g.drawString("y: " + myPlayer.getY(), 0, 24);
+        g.drawString("x: " + myPlayer.getX(), 0, 36);
+        g.drawString("v: " + myPlayer.getVelocity(), 0, 48);
+        g.drawString("ip:" + connection.getServerIp(), 0, 60);
     }
 
     public List<Player> getPlayers() {
