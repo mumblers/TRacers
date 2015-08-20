@@ -9,8 +9,8 @@ public class Track {
     private int[] track = {
             1,1,0,0,0,0,0,0,0,0,0,0,
             1,0,1,1,1,1,1,1,1,1,0,0,
-            0,1,1,0,0,0,0,0,0,1,1,0,
-            0,1,0,0,0,0,0,0,0,0,1,0,
+            0,1,1,0,0,1,1,1,0,1,1,0,
+            0,1,0,0,0,1,0,1,0,0,1,0,
             0,1,0,0,0,0,0,0,0,0,2,0,
             0,1,0,0,0,0,0,0,0,0,1,0,
             0,1,1,0,0,0,0,0,0,1,1,0,
@@ -27,6 +27,12 @@ public class Track {
 
     public int getHeight() {
         return height;
+    }
+
+    public void setTrack(int width, int height, int[] track) {
+        this.track = track;
+        this.width = width;
+        this.height = height;
     }
 
     //todo error checking
